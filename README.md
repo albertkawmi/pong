@@ -33,56 +33,48 @@ This will expand the JS pane and hide the others. From now on, all code we enter
 3.2 Enter the following code:
 
 ```javascript
-// Define some constants to use throughout the game
 let colour = 'lime';
 let ballRadius = 10;
 let paddleHeight = 75;
 let paddleWidth = 10;
 ```
-These are constant values about our game that will not change.
+This tells our game what we want the colour and size of the ball, and the paddles to be.
 
 ## 4 Set initial values for the ball
 
 ```javascript
-// Initial values for the ball
 let x = canvasWidth / 2;
 let y = canvasHeight / 2;
 
 let dx = 1;
 let dy = 1;
 ```
-The variables `x` and `y` will store the position of the centre of the ball.
-
-`dx` and `dy` are the amounts that the ball will move across the canvas every time we update it.
+This tells the game that want our ball to start in the middle of the canvas and which direction it should start moving in.
 
 ## 5 Set initial values for the paddles
 ```javascript
-// Inital values for the players
 let leftPlayerX = 0;
 let leftPlayerY = (canvasHeight - paddleHeight) / 2;
 
 let rightPlayerX = canvasWidth - paddleWidth;
 let rightPlayerY = (canvasHeight - paddleHeight) / 2;
 ```
+This tells the game where paddles are position at the start.
 
 ## 6 Create our main gameLoop function
-This is a function that will run every time the web browser is ready to update the canvas.
 
-6.1 First, define this function at the bottom of the file:
 ```javascript
+gameLoop();
+
 function gameLoop() {
-  // wait for the next frame to run gameLoop again
+  // some more instructions for our game will go here later
   requestAnimationFrame(gameLoop);
 }
 ```
-
-6.2 Then, above that function definition we will 'call' (i.e. use) that function:
-```javascript
-gameLoop();
-```
+This tells the web browser to keep looping the game. We will add more instructions later to tell the game what to do as the ball moves around.
 
 ## 7 Draw a line in the middle of the canvas
-7.1 Define the following function at the bottom of our file:
+7.1 Add this to the bottom of our file:
 ```javascript
 function drawLine() {
   canvas.beginPath();
@@ -92,17 +84,16 @@ function drawLine() {
   canvas.closePath();
 }
 ```
-7.2 Then call this function inside our `gameLoop`, as the first line of code _inside_ the function:
+7.2 Now we can use this function inside our `gameLoop`:
 ```javascript
 function gameLoop() {
   drawLine();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
 ```
 
 ## 8 Draw the ball
-8.1 Define this function at the bottom of the file:
+8.1 Add this to the bottom of the file:
 ```javascript
 function drawBall() {
   canvas.beginPath();
@@ -112,67 +103,60 @@ function drawBall() {
   canvas.closePath();
 }
 ```
-8.2 Then call it in our `gameLoop` function, just after `drawLine();`
+8.2 Now we can use this function in our `gameLoop`, just after `drawLine();`
 ```javascript
 function gameLoop() {
   drawLine();
   drawBall();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
 ```
 
 ## 9 Move the ball
-9.1 Define this function at the bottom of the file:
+9.1 Add this to the bottom of the file:
 ```javascript
 function moveBall() {
   x = x + dx;
   y = y + dy;
 }
 ```
-9.2 Call `moveBall` from inside `gameLoop`:
+9.2 Now we use `moveBall` in our `gameLoop`:
 ```javascript
 function gameLoop() {
   drawLine();
   drawBall();
   moveBall();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
 ```
 9.3 Look at the canvas. You should be able to see the path of the ball.
 
-## 10 Clear the canvas after each frame
-The canvas is draw a _new_ ball at a new position in every frame.
+## 10 Clear the canvas after each update
+The canvas is drawing a _new_ ball at a new position every time it updates.
 
-To make it look like the ball is moving, we need to clear the canvas before every frame.
+To make it look like the ball is moving, we need to clear the canvas before every update.
 
-10.1 Define the following function at the bottom of the file:
+10.1 Add this to bottom of the file:
 ```javascript
 function clearCanvas() {
   canvas.clearRect(0, 0, canvasWidth, canvasHeight);
 }
 ```
 
-10.2 Call the `clearCanvas` function at the top of our `gameLoop`:
+10.2 Use the `clearCanvas` function at the top of our `gameLoop`:
 ```javascript
 function gameLoop() {
   clearCanvas();
   drawLine();
   drawBall();
   moveBall();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
 ```
 You should see the ball move down and off the canvas.
 
-To start the animation again, change the value of `dx` to `2`.
-
-Any change will refresh the game.
-
-## 11 Bounce the ball of the walls
-11.1 Define this function at the bottom:
+## 11 Bounce the ball off the walls
+11.1 Add this to the bottom of the file:
 ```javascript
 function bounceOffWalls() {
   if (y + dy < 0) {
@@ -183,7 +167,10 @@ function bounceOffWalls() {
   }
 }
 ```
-11.2 Call `bounceOffWalls` inside our `gameLoop`:
+
+This just means that if the ball hits the bottom or the top it will automatically go in the opposite direction.
+
+11.2 Now we can add `bounceOffWalls` to our `gameLoop`:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -191,13 +178,12 @@ function gameLoop() {
   drawBall();
   moveBall();
   bounceOffWalls();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
 ```
 
 ## 12 Draw the paddles
-12.1 Define this function at the bottom:
+12.1 Add this to the bottom of the file:
 ```javascript
 function drawPaddle(x0, y0, w, h) {
   canvas.beginPath();
@@ -207,15 +193,13 @@ function drawPaddle(x0, y0, w, h) {
   canvas.closePath();
 }
 ```
-Note that this is our first function that takes _arguments_.
-
-This is so that we can use the same function to draw _both_ paddles by passing in different arguments for each paddle.
-
-12.2 Inside the `gameLoop` function call the `drawPaddle` function immediately after `drawBall`:
+12.2 Inside the `gameLoop` add the `drawPaddle` function immediately after `drawBall`:
 ```javascript
 drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
 ```
-12.3 On the following line, call the function again, this time with arguments for the _right_ paddle:
+This will draw the _left_ paddle.
+
+12.3 On the following line, add `drawPaddle` again, this time for the _right_ paddle:
 ```javascript
 drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
 ```
@@ -229,12 +213,11 @@ function gameLoop() {
   drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
   moveBall();
   bounceOffWalls();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
 ```
 ## 13 Move the computer paddle
-13.1 Define this function at the bottom:
+13.1 Add this to the bottom:
 ```javascript
 function moveComputerPaddle() {
   rightPaddleY = y - paddleHeight / 2;
@@ -242,7 +225,7 @@ function moveComputerPaddle() {
 ```
 This will simply keep the right paddle in line with the ball - it can't lose!
 
-13.2 Call `moveComputerPaddle` inside the `gameLoop`, on the line after `moveBall` is called:
+13.2 Add `moveComputerPaddle` to the `gameLoop`, on the line after `moveBall`:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -253,7 +236,105 @@ function gameLoop() {
   moveBall();
   moveComputerPaddle();
   bounceOffWalls();
-  // wait for the next frame to run gameLoop again
   requestAnimationFrame(gameLoop);
 }
+```
+## 14 Bounce the ball off the paddles
+14.1 Add this to the bottom of the file:
+```javascript
+function handleBoundary(ballHitPaddle) {    
+  if (ballHitPaddle) {
+    // change direction of the ball
+    dx = -dx;
+  } else {
+    // ball missed the paddle
+    // reset its position to the centre of the court
+    x = canvasWidth / 2;
+    y = canvasHeight / 2;
+    dy = -dy;
+    dx = -dx;
+  }   
+}
+```
+Instead of using in our `gameLoop`, we will use this it in another function in the next step.
+
+14.2 Add another function at the bottom, starting with just these two lines:
+```javascript
+function bounceOffPaddles() {
+  let leftBoundary = x < paddleWidth;
+  let rightBoundary = x > canvasWidth - paddleWidth;
+}
+```
+These are rules to check when the ball is at the left and right edges of the canvas.
+
+14.3 Now we set more rules to check whether the ball has hit a paddle and should bounce back or has hit the edge and should reset. Inside the same function, add this code:
+```javascript
+function bounceOffPaddles() {
+  let leftBoundary = x < paddleWidth;
+  let rightBoundary = x > canvasWidth - paddleWidth;
+  
+  if (leftBoundary) {    
+    let ballHitsLeftPaddle =
+      y > leftPaddleY
+      && y < leftPaddleY + paddleHeight;
+
+    handleBoundary(ballHitsLeftPaddle);
+  }
+}
+```
+
+We have now finished setting the rules for the left edge and now we need to do the same for the right edge.
+
+14.4 Add the remaining code to the function so that the completed function looks like this:
+
+```javascript
+function bounceOffPaddles() {
+  let leftBoundary = x < paddleWidth;
+  let rightBoundary = x > canvasWidth - paddleWidth;
+  
+  if (leftBoundary) {    
+    let ballHitsLeftPaddle =
+      y > leftPaddleY
+      && y < leftPaddleY + paddleHeight;
+
+    handleBoundary(ballHitsLeftPaddle);
+  }
+  
+  if (rightBoundary) {
+    let ballHitsRightPaddle =
+      y > rightPaddleY
+      && y < rightPaddleY + paddleHeight;
+
+    handleBoundary(ballHitsRightPaddle);
+  }
+}
+```
+14.5 Lastly, add the `bounceOffPaddles` function to our `gameLoop`, immediately after `bounceOffWalls`:
+```javascript
+function gameLoop() {
+  clearCanvas();
+  drawLine();
+  drawBall();
+  drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
+  drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
+  moveBall();
+  moveComputerPaddle();
+  bounceOffWalls();
+  bounceOffPaddles();
+  requestAnimationFrame(gameLoop);
+}
+```
+## 15 Move the 'human' paddle
+15.1 Add this to the bottom: of the file:
+```javascript
+function moveLeftPaddle(event) {
+  leftPaddleY = event.pageY - canvasElement.offsetTop;
+}
+```
+15.2 Add this line, just before `gameLoop` is first used:
+```javascript
+// Track mouse movements
+document.addEventListener('mousemove', moveLeftPaddle);
+
+gameLoop();
 ```
