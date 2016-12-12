@@ -18,7 +18,7 @@ About halfway should be enough.
 
 ## 2 Add the HTML Canvas Element
 
-In the HTML box enter the following:
+In the HTML box copy/paste the following:
 
 ```html
 <canvas id="pong" width="480" height="320" style="background: gray"></canvas>
@@ -33,8 +33,10 @@ This will expand the JS pane and hide the others. From now on, all code we enter
 3.2 Enter the following code:
 
 ```javascript
-let colour = 'lime';
+let ballColour = 'lime';
 let ballRadius = 10;
+
+let paddleColour = 'lime';
 let paddleHeight = 75;
 let paddleWidth = 10;
 ```
@@ -74,36 +76,61 @@ function gameLoop() {
 This tells the web browser to keep looping the game. We will add more instructions later to tell the game what to do as the ball moves around.
 
 ## 7 Draw a line in the middle of the canvas
-7.1 Add this to the bottom of our file:
+7.1 At the very top of our file, insert these lines:
 ```javascript
-function drawLine() {
+let canvasElement = document.getElementById('pong');
+let canvas = canvasElement.getContext('2d');
+let canvasWidth = canvasElement.width;
+let canvasHeight = canvasElement.height;
+```
+This gets our `canvas` ready to draw on and we grab the `canvasWidth` and `canvasHeight` values so we can use them later.
+
+7.2 Add this at the bottom of our file:
+```javascript
+function draw(shape, colour, ...details) {
   canvas.beginPath();
-  canvas.rect(canvasWidth / 2, 0, 2, canvasHeight);
-  canvas.fillStyle = 'white';
+  canvas[shape](...details);
+  canvas.fillStyle = colour;
   canvas.fill();
   canvas.closePath();
 }
 ```
-7.2 Now we can use this function inside our `gameLoop`:
+We will use this function in a few places to draw different shapes on the canvas.
+
+7.3 The first shape we will draw is a simple line in the middle of the canvas.
+
+Add this to the bottom of the file:
+```javascript
+function drawLine() {
+  let lineX = canvasWidth / 2;
+  let lineY = 0;
+  let lineWidth = 2;
+  let lineHeight = canvasHeight;
+  let lineColour = 'white';
+  
+  draw('rect', lineColour, lineX, lineY, lineWidth, lineHeight);
+}
+```
+
+7.4 Now we can use `drawLine` in our `gameLoop`:
 ```javascript
 function gameLoop() {
   drawLine();
   requestAnimationFrame(gameLoop);
 }
 ```
+So far, our `gameLoop` draws just that same line over and over. Let's add a ball...
 
 ## 8 Draw the ball
 8.1 Add this to the bottom of the file:
 ```javascript
 function drawBall() {
-  canvas.beginPath();
-  canvas.arc(x, y, ballRadius, 0, Math.PI * 2);
-  canvas.fillStyle = colour;
-  canvas.fill();
-  canvas.closePath();
+  draw('arc', ballColour, x, y, ballRadius, 0, Math.PI * 2);
 }
 ```
-8.2 Now we can use this function in our `gameLoop`, just after `drawLine();`
+Remember, we defined the initial values for our ball in step 4.
+
+8.2 Now we can add `drawBall` to our `gameLoop`, just after `drawLine();`
 ```javascript
 function gameLoop() {
   drawLine();
@@ -186,19 +213,11 @@ function gameLoop() {
 12.1 Add this to the bottom of the file:
 ```javascript
 function drawLeftPaddle() {
-  canvas.beginPath();
-  canvas.rect(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
-  canvas.fillStyle = colour;
-  canvas.fill();
-  canvas.closePath();
+  draw('rect', paddleColour, leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
 }
 
 function drawRightPaddle() {
-  canvas.beginPath();
-  canvas.rect(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
-  canvas.fillStyle = colour;
-  canvas.fill();
-  canvas.closePath();
+  draw('rect', paddleColour, rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
 }
 ```
 These are two similar functions for drawing rectangles to represent the left and right paddles.
@@ -258,7 +277,7 @@ function handleBoundary(ballHitPaddle) {
     dx = -dx;
   } else {
     // ball missed the paddle
-    // reset its position to the centre of the court
+    // reset its position to the centre of the canvas
     x = canvasWidth / 2;
     y = canvasHeight / 2;
     dy = -dy;
