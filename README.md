@@ -185,15 +185,25 @@ function gameLoop() {
 ## 12 Draw the paddles
 12.1 Add this to the bottom of the file:
 ```javascript
-function drawPaddle(x0, y0, w, h) {
+function drawLeftPaddle() {
   canvas.beginPath();
-  canvas.rect(x0, y0, w, h);
+  canvas.rect(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
+  canvas.fillStyle = colour;
+  canvas.fill();
+  canvas.closePath();
+}
+
+function drawRightPaddle() {
+  canvas.beginPath();
+  canvas.rect(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
   canvas.fillStyle = colour;
   canvas.fill();
   canvas.closePath();
 }
 ```
-12.2 Inside the `gameLoop` add the `drawPaddle` function immediately after `drawBall`:
+These are two similar functions for drawing rectangles to represent the left and right paddles.
+
+12.2 Add each of these to the `gameLoop` immediately after `drawBall`:
 ```javascript
 drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
 ```
@@ -209,8 +219,8 @@ function gameLoop() {
   clearCanvas();
   drawLine();
   drawBall();
-  drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
-  drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
+  drawLeftPaddle();
+  drawRightPaddle();
   moveBall();
   bounceOffWalls();
   requestAnimationFrame(gameLoop);
@@ -231,8 +241,8 @@ function gameLoop() {
   clearCanvas();
   drawLine();
   drawBall();
-  drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
-  drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
+  drawLeftPaddle();
+  drawRightPaddle();
   moveBall();
   moveComputerPaddle();
   bounceOffWalls();
@@ -315,8 +325,8 @@ function gameLoop() {
   clearCanvas();
   drawLine();
   drawBall();
-  drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
-  drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
+  drawLeftPaddle();
+  drawRightPaddle();
   moveBall();
   moveComputerPaddle();
   bounceOffWalls();
