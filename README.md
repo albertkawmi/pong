@@ -33,6 +33,7 @@ This will expand the JS pane and hide the others. From now on, all code we enter
 3.2 Enter the following code:
 
 ```javascript
+// colours and sizes
 let ballColour = 'lime';
 let ballRadius = 10;
 
@@ -45,6 +46,7 @@ This tells our game what we want the colour and size of the ball, and the paddle
 ## 4 Set initial values for the ball
 
 ```javascript
+// ball position and direction
 let x = canvasWidth / 2;
 let y = canvasHeight / 2;
 
@@ -55,11 +57,12 @@ This tells the game that want our ball to start in the middle of the canvas and 
 
 ## 5 Set initial values for the paddles
 ```javascript
-let leftPlayerX = 0;
-let leftPlayerY = (canvasHeight - paddleHeight) / 2;
+// paddle positions
+let leftPaddleX = 0;
+let leftPaddleY = (canvasHeight - paddleHeight) / 2;
 
-let rightPlayerX = canvasWidth - paddleWidth;
-let rightPlayerY = (canvasHeight - paddleHeight) / 2;
+let rightPaddleX = canvasWidth - paddleWidth;
+let rightPaddleY = (canvasHeight - paddleHeight) / 2;
 ```
 This tells the game where paddles are position at the start.
 
@@ -69,7 +72,7 @@ This tells the game where paddles are position at the start.
 gameLoop();
 
 function gameLoop() {
-  // some more instructions for our game will go here later
+  // some more code for our game will go here later
   requestAnimationFrame(gameLoop);
 }
 ```
@@ -125,7 +128,9 @@ So far, our `gameLoop` draws just that same line over and over. Let's add a ball
 8.1 Add this to the bottom of the file:
 ```javascript
 function drawBall() {
-  draw('arc', ballColour, x, y, ballRadius, 0, Math.PI * 2);
+  let startAngle = 0;
+  let endAngle = 2 * Math.PI; // 360 degrees
+  draw('arc', ballColour, x, y, ballRadius, startAngle, endAnngle);
 }
 ```
 Remember, we defined the initial values for our ball in step 4.
@@ -186,16 +191,15 @@ You should see the ball move down and off the canvas.
 11.1 Add this to the bottom of the file:
 ```javascript
 function bounceOffWalls() {
-  if (y + dy < 0) {
-    dy = -dy;
-  }
-  if (y + dy > canvasHeight) {
+  let ballTouchesTop = y < 0;
+  let ballTouchesBottom = y > canvasHeight;
+
+  if (ballTouchesTop || ballTouchesBottom) {
     dy = -dy;
   }
 }
 ```
-
-This just means that if the ball hits the bottom or the top it will automatically go in the opposite direction.
+This just means that if the ball hits the bottom _or_ the top it will bounce and go in the _opposite_ direction.
 
 11.2 Now we can add `bounceOffWalls` to our `gameLoop`:
 ```javascript
@@ -252,7 +256,7 @@ function moveComputerPaddle() {
   rightPaddleY = y - paddleHeight / 2;
 }
 ```
-This will simply keep the right paddle in line with the ball - it can't lose!
+This will simply keep the right paddle in line with the ball - the computer can't lose!
 
 13.2 Add `moveComputerPaddle` to the `gameLoop`, on the line after `moveBall`:
 ```javascript
@@ -291,25 +295,26 @@ Instead of using in our `gameLoop`, we will use this it in another function in t
 ```javascript
 function bounceOffPaddles() {
   let leftBoundary = x < paddleWidth;
-  let rightBoundary = x > canvasWidth - paddleWidth;
+
+  let ballHitsLeftPaddle =
+    y > leftPaddleY
+    && y < leftPaddleY + paddleHeight;
 }
 ```
-These are rules to check when the ball is at the left and right edges of the canvas.
+These are rules to check when the ball is at the left edge of the canvas and whether it has hit the left paddle.
 
-14.3 Now we set more rules to check whether the ball has hit a paddle and should bounce back or has hit the edge and should reset. Inside the same function, add this code:
+14.3 Next we add a few more lines to this function:
 ```javascript
 function bounceOffPaddles() {
   let leftBoundary = x < paddleWidth;
-  let rightBoundary = x > canvasWidth - paddleWidth;
-  
-  if (leftBoundary) {    
-    let ballHitsLeftPaddle =
-      y > leftPaddleY
-      && y < leftPaddleY + paddleHeight;
 
+  let ballHitsLeftPaddle =
+    y > leftPaddleY
+    && y < leftPaddleY + paddleHeight;
+
+  if (leftBoundary) { 
     handleBoundary(ballHitsLeftPaddle);
   }
-}
 ```
 
 We have now finished setting the rules for the left edge and now we need to do the same for the right edge.
@@ -319,21 +324,23 @@ We have now finished setting the rules for the left edge and now we need to do t
 ```javascript
 function bounceOffPaddles() {
   let leftBoundary = x < paddleWidth;
-  let rightBoundary = x > canvasWidth - paddleWidth;
-  
-  if (leftBoundary) {    
-    let ballHitsLeftPaddle =
-      y > leftPaddleY
-      && y < leftPaddleY + paddleHeight;
 
+  let ballHitsLeftPaddle =
+    y > leftPaddleY
+    && y < leftPaddleY + paddleHeight;
+  
+
+  if (leftBoundary) { 
     handleBoundary(ballHitsLeftPaddle);
   }
+
+  let rightBoundary = x > canvasWidth - paddleWidth;
+  
+  let ballHitsRightPaddle =
+    y > rightPaddleY
+    && y < rightPaddleY + paddleHeight;
   
   if (rightBoundary) {
-    let ballHitsRightPaddle =
-      y > rightPaddleY
-      && y < rightPaddleY + paddleHeight;
-
     handleBoundary(ballHitsRightPaddle);
   }
 }
