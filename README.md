@@ -4,15 +4,15 @@ Slides: https://docs.google.com/presentation/d/1BJMuPPkH3cyHuPbPVLVln8UEhhmZxtxa
 
 ## 1 Setup Codepen
 
-1.1 Go to http://codepen.io/pen
+#### 1.1 Go to http://codepen.io/pen
 
-1.2 Click the 'Change View' button on the top right
+#### 1.2 Click the 'Change View' button on the top right
 
-1.3 Choose the first layout option
+#### 1.3 Choose the first layout option
 
-1.4 Click the 'Change View' button again to dismiss the menu
+#### 1.4 Click the 'Change View' button again to dismiss the menu
 
-1.5 Drag the vertical bar to the right to give yourself more room to write code.
+#### 1.5 Drag the vertical bar to the right to give yourself more room to write code.
 
 About halfway should be enough.
 
@@ -26,11 +26,11 @@ In the HTML box copy/paste the following:
 
 ## 3 Define colours and sizes
 
-3.1 Double click where it says 'JS (babel)' in the bottom editor pane.
+#### 3.1 Double click where it says 'JS (babel)' in the bottom editor pane.
 
 This will expand the JS pane and hide the others. From now on, all code we enter will be in the JS editor.
 
-3.2 Enter the following code:
+#### 3.2 Enter the following code:
 
 ```javascript
 // colours and sizes
@@ -79,7 +79,7 @@ function gameLoop() {
 This tells the web browser to keep looping the game. We will add more instructions later to tell the game what to do as the ball moves around.
 
 ## 7 Draw a line in the middle of the canvas
-7.1 At the very top of our file, insert these lines:
+#### 7.1 At the very top of our file, insert these lines:
 ```javascript
 let canvasElement = document.getElementById('pong');
 let canvas = canvasElement.getContext('2d');
@@ -88,7 +88,7 @@ let canvasHeight = canvasElement.height;
 ```
 This gets our `canvas` ready to draw on and we grab the `canvasWidth` and `canvasHeight` values so we can use them later.
 
-7.2 Add this at the bottom of our file:
+#### 7.2 Add this at the bottom of our file:
 ```javascript
 function draw(shape, colour, ...details) {
   canvas.beginPath();
@@ -100,9 +100,9 @@ function draw(shape, colour, ...details) {
 ```
 We will use this function in a few places to draw different shapes on the canvas.
 
-7.3 The first shape we will draw is a simple line in the middle of the canvas.
+#### 7.3 The first shape we will draw is a simple line in the middle of the canvas.
 
-Add this to the bottom of the file:
+#### Add this to the bottom of the file:
 ```javascript
 function drawLine() {
   let lineX = canvasWidth / 2;
@@ -115,7 +115,7 @@ function drawLine() {
 }
 ```
 
-7.4 Now we can use `drawLine` in our `gameLoop`:
+#### 7.4 Now we can use `drawLine` in our `gameLoop`:
 ```javascript
 function gameLoop() {
   drawLine();
@@ -125,7 +125,7 @@ function gameLoop() {
 So far, our `gameLoop` draws just that same line over and over. Let's add a ball...
 
 ## 8 Draw the ball
-8.1 Add this to the bottom of the file:
+#### 8.1 Add this to the bottom of the file:
 ```javascript
 function drawBall() {
   let startAngle = 0;
@@ -135,7 +135,7 @@ function drawBall() {
 ```
 Remember, we defined the initial values for our ball in step 4.
 
-8.2 Now we can add `drawBall` to our `gameLoop`, just after `drawLine();`
+#### 8.2 Now we can add `drawBall` to our `gameLoop`, just after `drawLine();`
 ```javascript
 function gameLoop() {
   drawLine();
@@ -145,14 +145,14 @@ function gameLoop() {
 ```
 
 ## 9 Move the ball
-9.1 Add this to the bottom of the file:
+#### 9.1 Add this to the bottom of the file:
 ```javascript
 function moveBall() {
   x = x + dx;
   y = y + dy;
 }
 ```
-9.2 Now we use `moveBall` in our `gameLoop`:
+#### 9.2 Now we use `moveBall` in our `gameLoop`:
 ```javascript
 function gameLoop() {
   drawLine();
@@ -161,21 +161,21 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 ```
-9.3 Look at the canvas. You should be able to see the path of the ball.
+#### 9.3 Look at the canvas. You should be able to see the path of the ball.
 
 ## 10 Clear the canvas after each update
 The canvas is drawing a _new_ ball at a new position every time it updates.
 
 To make it look like the ball is moving, we need to clear the canvas before every update.
 
-10.1 Add this to bottom of the file:
+#### 10.1 Add this to bottom of the file:
 ```javascript
 function clearCanvas() {
   canvas.clearRect(0, 0, canvasWidth, canvasHeight);
 }
 ```
 
-10.2 Use the `clearCanvas` function at the top of our `gameLoop`:
+#### 10.2 Use the `clearCanvas` function at the top of our `gameLoop`:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -188,7 +188,7 @@ function gameLoop() {
 You should see the ball move down and off the canvas.
 
 ## 11 Bounce the ball off the walls
-11.1 Add this to the bottom of the file:
+#### 11.1 Add this to the bottom of the file:
 ```javascript
 function bounceOffWalls() {
   let ballTouchesTop = y < 0;
@@ -201,7 +201,7 @@ function bounceOffWalls() {
 ```
 This just means that if the ball hits the bottom _or_ the top it will bounce and go in the _opposite_ direction.
 
-11.2 Now we can add `bounceOffWalls` to our `gameLoop`:
+#### 11.2 Now we can add `bounceOffWalls` to our `gameLoop`:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -214,7 +214,7 @@ function gameLoop() {
 ```
 
 ## 12 Draw the paddles
-12.1 Add this to the bottom of the file:
+#### 12.1 Add this to the bottom of the file:
 ```javascript
 function drawLeftPaddle() {
   draw('rect', paddleColour, leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
@@ -226,17 +226,17 @@ function drawRightPaddle() {
 ```
 These are two similar functions for drawing rectangles to represent the left and right paddles.
 
-12.2 Add each of these to the `gameLoop` immediately after `drawBall`:
+#### 12.2 Add each of these to the `gameLoop` immediately after `drawBall`:
 ```javascript
 drawPaddle(leftPaddleX, leftPaddleY, paddleWidth, paddleHeight);
 ```
 This will draw the _left_ paddle.
 
-12.3 On the following line, add `drawPaddle` again, this time for the _right_ paddle:
+#### 12.3 On the following line, add `drawPaddle` again, this time for the _right_ paddle:
 ```javascript
 drawPaddle(rightPaddleX, rightPaddleY, paddleWidth, paddleHeight);
 ```
-12.4 Check your code. The `gameLoop` function should now look like this:
+#### 12.4 Check your code. The `gameLoop` function should now look like this:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -250,7 +250,7 @@ function gameLoop() {
 }
 ```
 ## 13 Move the computer paddle
-13.1 Add this to the bottom:
+#### 13.1 Add this to the bottom:
 ```javascript
 function moveComputerPaddle() {
   rightPaddleY = y - paddleHeight / 2;
@@ -258,7 +258,7 @@ function moveComputerPaddle() {
 ```
 This will simply keep the right paddle in line with the ball - the computer can't lose!
 
-13.2 Add `moveComputerPaddle` to the `gameLoop`, on the line after `moveBall`:
+#### 13.2 Add `moveComputerPaddle` to the `gameLoop`, on the line after `moveBall`:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -273,7 +273,7 @@ function gameLoop() {
 }
 ```
 ## 14 Bounce the ball off the paddles
-14.1 Add this to the bottom of the file:
+#### 14.1 Add this to the bottom of the file:
 ```javascript
 function handleBoundary(ballHitPaddle) {    
   if (ballHitPaddle) {
@@ -291,7 +291,7 @@ function handleBoundary(ballHitPaddle) {
 ```
 Instead of using in our `gameLoop`, we will use this it in another function in the next step.
 
-14.2 Add another function at the bottom, starting with just these two lines:
+#### 14.2 Add another function at the bottom, starting with just these two lines:
 ```javascript
 function bounceOffPaddles() {
   let leftBoundary = x < paddleWidth;
@@ -303,7 +303,7 @@ function bounceOffPaddles() {
 ```
 These are rules to check when the ball is at the left edge of the canvas and whether it has hit the left paddle.
 
-14.3 Next we add a few more lines to this function:
+#### 14.3 Next we add a few more lines to this function:
 ```javascript
 function bounceOffPaddles() {
   let leftBoundary = x < paddleWidth;
@@ -319,7 +319,7 @@ function bounceOffPaddles() {
 
 We have now finished setting the rules for the left edge and now we need to do the same for the right edge.
 
-14.4 Add the remaining code to the function so that the completed function looks like this:
+#### 14.4 Add the remaining code to the function so that the completed function looks like this:
 
 ```javascript
 function bounceOffPaddles() {
@@ -345,7 +345,7 @@ function bounceOffPaddles() {
   }
 }
 ```
-14.5 Lastly, add the `bounceOffPaddles` function to our `gameLoop`, immediately after `bounceOffWalls`:
+#### 14.5 Lastly, add the `bounceOffPaddles` function to our `gameLoop`, immediately after `bounceOffWalls`:
 ```javascript
 function gameLoop() {
   clearCanvas();
@@ -361,13 +361,13 @@ function gameLoop() {
 }
 ```
 ## 15 Move the 'human' paddle
-15.1 Add this to the bottom: of the file:
+#### 15.1 Add this to the bottom: of the file:
 ```javascript
 function moveLeftPaddle(event) {
   leftPaddleY = event.pageY - canvasElement.offsetTop;
 }
 ```
-15.2 Add this line, just before `gameLoop` is first used:
+#### 15.2 Add this line, just before `gameLoop` is first used:
 ```javascript
 // Track mouse movements
 document.addEventListener('mousemove', moveLeftPaddle);
