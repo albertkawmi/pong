@@ -24,7 +24,7 @@ In the HTML box copy/paste the following:
 <canvas id="pong" width="480" height="320" style="background: gray"></canvas>
 ```
 
-## 3 Define some constant values
+## 3 Define colours and sizes
 
 3.1 Double click where it says 'JS (babel)' in the bottom editor pane.
 
@@ -43,7 +43,7 @@ let paddleWidth = 10;
 ```
 This tells our game what we want the colour and size of the ball, and the paddles to be.
 
-## 4 Set initial values for the ball
+## 4 Set the initial position of the ball
 
 ```javascript
 // ball position and direction
