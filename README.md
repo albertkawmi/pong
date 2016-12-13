@@ -18,19 +18,27 @@ About halfway should be enough.
 
 ## 2 Add the HTML Canvas Element
 
-In the HTML box copy/paste the following:
+#### 2.1 In the HTML box copy/paste the following:
 
 ```html
 <canvas id="pong" width="480" height="320" style="background: gray"></canvas>
 ```
-## 3 Define colours and sizes
-
-#### 3.1 Double click where it says 'JS (babel)' in the bottom editor pane.
+#### 2.2 Double click where it says 'JS (babel)' in the bottom editor pane.
 
 This will expand the JS pane and hide the others. From now on, all code we enter will be in the JS editor.
 
-#### 3.2 Enter the following code:
+#### 2.3 At the very top of the JS pane, insert these lines:
+```javascript
+// Get our canvas ready
+let canvasElement = document.getElementById('pong');
+let canvas = canvasElement.getContext('2d');
+let canvasWidth = canvasElement.width;
+let canvasHeight = canvasElement.height;
+```
+This gets our `canvas` ready to draw on and we grab the `canvasWidth` and `canvasHeight` values so we can use them later.
 
+## 3 Define colours and sizes
+Next, enter the following code:
 ```javascript
 // colours and sizes
 let ballColour = 'lime';
@@ -43,7 +51,6 @@ let paddleWidth = 10;
 This tells our game what we want the colour and size of the ball, and the paddles to be.
 
 ## 4 Set the initial position of the ball
-
 ```javascript
 // ball position and direction
 let x = canvasWidth / 2;
@@ -66,7 +73,6 @@ let rightPaddleY = (canvasHeight - paddleHeight) / 2;
 This tells the game where paddles are position at the start.
 
 ## 6 Create our main gameLoop function
-
 ```javascript
 gameLoop();
 
@@ -78,15 +84,6 @@ function gameLoop() {
 This tells the web browser to keep looping the game. We will add more instructions later to tell the game what to do as the ball moves around.
 
 ## 7 Draw a line in the middle of the canvas
-#### 7.1 At the very top of our file, insert these lines:
-```javascript
-let canvasElement = document.getElementById('pong');
-let canvas = canvasElement.getContext('2d');
-let canvasWidth = canvasElement.width;
-let canvasHeight = canvasElement.height;
-```
-This gets our `canvas` ready to draw on and we grab the `canvasWidth` and `canvasHeight` values so we can use them later.
-
 #### 7.2 Add this at the bottom of our file:
 ```javascript
 function draw(shape, colour, ...details) {
@@ -113,8 +110,9 @@ function drawLine() {
   draw('rect', lineColour, lineX, lineY, lineWidth, lineHeight);
 }
 ```
+Now we can use `drawLine` in our `gameLoop`.
 
-#### 7.4 Now we can use `drawLine` in our `gameLoop`:
+#### 7.4 Scroll to the `gameLoop` function that we already defined. Insert the `drawLine` function inside the `gameLoop` so that it looks like this:
 ```javascript
 function gameLoop() {
   drawLine();
@@ -129,7 +127,7 @@ So far, our `gameLoop` draws just that same line over and over. Let's add a ball
 function drawBall() {
   let startAngle = 0;
   let endAngle = 2 * Math.PI; // 360 degrees
-  draw('arc', ballColour, x, y, ballRadius, startAngle, endAnngle);
+  draw('arc', ballColour, x, y, ballRadius, startAngle, endAngle);
 }
 ```
 Remember, we defined the initial values for our ball in step 4.
@@ -315,6 +313,7 @@ function bounceOffPaddles() {
   if (leftBoundary) { 
     handleBoundary(ballHitsLeftPaddle);
   }
+}
 ```
 
 We have now finished setting the rules for the left edge and now we need to do the same for the right edge.
