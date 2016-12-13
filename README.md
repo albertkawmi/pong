@@ -42,8 +42,6 @@ let paddleWidth = 10;
 ```
 This tells our game what we want the colour and size of the ball, and the paddles to be.
 
-<hr style="page-break-after:always" />
-
 ## 4 Set the initial position of the ball
 
 ```javascript
@@ -78,8 +76,6 @@ function gameLoop() {
 }
 ```
 This tells the web browser to keep looping the game. We will add more instructions later to tell the game what to do as the ball moves around.
-
-<hr style="page-break-after:always" />
 
 ## 7 Draw a line in the middle of the canvas
 #### 7.1 At the very top of our file, insert these lines:
@@ -127,8 +123,6 @@ function gameLoop() {
 ```
 So far, our `gameLoop` draws just that same line over and over. Let's add a ball...
 
-<hr style="page-break-after:always" />
-
 ## 8 Draw the ball
 #### 8.1 Add this to the bottom of the file:
 ```javascript
@@ -167,8 +161,6 @@ function gameLoop() {
 }
 ```
 #### 9.3 Look at the canvas. You should be able to see the path of the ball.
-
-<hr style="page-break-after:always" />
 
 ## 10 Clear the canvas after each update
 The canvas is drawing a _new_ ball at a new position every time it updates.
@@ -219,8 +211,6 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 ```
-
-<hr style="page-break-after:always" />
 
 ## 12 Draw the paddles
 #### 12.1 Add this to the bottom of the file:
@@ -281,8 +271,6 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 ```
-
-<hr style="page-break-after:always" />
 
 ## 14 Bounce the ball off the paddles
 #### 14.1 Add this to the bottom of the file:
@@ -372,8 +360,6 @@ function gameLoop() {
   requestAnimationFrame(gameLoop);
 }
 ```
-
-<hr style="page-break-after:always" />
 
 ## 15 Move the 'human' paddle
 #### 15.1 Add this to the bottom: of the file:
