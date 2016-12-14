@@ -4,7 +4,7 @@ Slides: https://docs.google.com/presentation/d/1BJMuPPkH3cyHuPbPVLVln8UEhhmZxtxa
 
 ## 1 Setup Codepen
 
-#### 1.1 Go to http://codepen.io/pen
+#### 1.1 Open this link in a new tab https://codepen.io/albertkawmi/pen/JbmdmX?editors=1010
 
 #### 1.2 Click the 'Change View' button on the top right
 
@@ -18,16 +18,17 @@ About halfway should be enough.
 
 ## 2 Add the HTML Canvas Element
 
-#### 2.1 In the HTML box copy/paste the following:
-
+#### 2.1 In the HTML editor pane you should see the following:
 ```html
 <canvas id="pong" width="480" height="320" style="background: gray"></canvas>
 ```
+Note: if you are starting from scratch and the HTML box is empty, just copy/paste the above code into the HTML box.
+
 #### 2.2 Double click where it says 'JS (babel)' in the bottom editor pane.
 
 This will expand the JS pane and hide the others. From now on, all code we enter will be in the JS editor.
 
-#### 2.3 At the very top of the JS pane, insert these lines:
+#### 2.3 In the JS pane, you should see the following lines of code:
 ```javascript
 // Get our canvas ready
 let canvasElement = document.getElementById('pong');
@@ -35,10 +36,12 @@ let canvas = canvasElement.getContext('2d');
 let canvasWidth = canvasElement.width;
 let canvasHeight = canvasElement.height;
 ```
+(Again, if the pane is empty, copy/paste the above lines in.)
+
 This gets our `canvas` ready to draw on and we grab the `canvasWidth` and `canvasHeight` values so we can use them later.
 
-## 3 Define colours and sizes
-Next, enter the following code:
+## 3 Let's define some colours and sizes
+Type in the following code:
 ```javascript
 // colours and sizes
 let ballColour = 'lime';
@@ -48,7 +51,7 @@ let paddleColour = 'lime';
 let paddleHeight = 75;
 let paddleWidth = 10;
 ```
-This tells our game what we want the colour and size of the ball, and the paddles to be.
+This tells our game what we want the colour and size of the ball and the paddles to be.
 
 ## 4 Set the initial position of the ball
 ```javascript
@@ -70,7 +73,7 @@ let leftPaddleY = (canvasHeight - paddleHeight) / 2;
 let rightPaddleX = canvasWidth - paddleWidth;
 let rightPaddleY = (canvasHeight - paddleHeight) / 2;
 ```
-This tells the game where paddles are position at the start.
+This tells the game where paddles are positioned at the start.
 
 ## 6 Create our main gameLoop function
 ```javascript
