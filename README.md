@@ -4,15 +4,15 @@ Slides: https://docs.google.com/presentation/d/1BJMuPPkH3cyHuPbPVLVln8UEhhmZxtxa
 
 ## 1 Setup Codepen
 
-#### 1.1 Open this link in a new tab https://codepen.io/albertkawmi/pen/JbmdmX?editors=1010
+#### 1.1 Hold `ctrl` (or `cmd` on Mac) and click this link to open it in a new tab https://codepen.io/albertkawmi/pen/JbmdmX?editors=1010
 
-#### 1.2 Click the 'Change View' button on the top right
+#### 1.2 In the new Codepen tab ensure that you are logged out (in case a previous user had logged in)
 
-#### 1.3 Choose the first layout option
+#### 1.3 Click the 'Fork' button at the top.
 
-#### 1.4 Click the 'Change View' button again to dismiss the menu
+You should see a dark grey bar separating the code editor (left side) from the preview (right side).
 
-#### 1.5 Drag the vertical bar to the right to give yourself more room to write code.
+#### 1.4 Drag the grey bar to the right to make more room in the code editor.
 
 About halfway should be enough.
 
