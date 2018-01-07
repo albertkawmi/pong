@@ -1,5 +1,9 @@
 # Game? An Introduction to Coding
 
+This was a 1-hour workshop I gave to introduce non-technical folks to programming. _This is not good code!_ To fit the material into an hour I tried to structure the code so that it requires the fewest number of concepts to be explained (e.g. I used `let` everywhere instead of `var` or `const` because `let x = 1;` reads almost like plain English). 
+
+_The goal is just to get a flavour of what programming is about._
+
 Slides: https://docs.google.com/presentation/d/1BJMuPPkH3cyHuPbPVLVln8UEhhmZxtxaJgmlxplPPuw/edit?usp=sharing
 
 ## 1 Setup Codepen
